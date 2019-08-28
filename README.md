@@ -12,8 +12,6 @@ As of now, it can simulate evolution of a field `F` governed by the following eq
 To add:
 
 - XSPH Velocity correction for particles
-- Variable particle velocities support : EGN as an evolving vector field 
-- More equations for simulating cases such as [sod shocktube](https://en.wikipedia.org/wiki/Sod_shock_tube)
 
 ### Example
 
