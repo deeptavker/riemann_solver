@@ -5,8 +5,8 @@ A basic implementation of 1 dimensional riemann solver using SPH technique.
 Read about Riemann problems [here](https://en.wikipedia.org/wiki/Riemann_problem). 
 
 As of now, it can simulate evolution of a field `F` governed by the following eqns
-- dF/dx + dF/dt = 0     Given initial F 
-- dF/dt + F\*dF/dx = 0    Given initial F
+- dF/dx + dF/dt = 0     Given initial F , in this case EGN = 1
+- dF/dt + F\*dF/dx = 0    Given initial F , in this case EGN = phi (field) #hardcoded 
 
 
 To add:
