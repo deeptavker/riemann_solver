@@ -71,7 +71,7 @@ class RiemannSolver1D(object):
             
             self.particles.rho[i] = np.sum(self.kernel(pos_arr[i] - pos_arr, h, 0))
             
-    def update_field_euler(self):
+    def update_field_euler(self, **kwargs):
         '''
         This method updates phi
         This is for one timestep
@@ -84,16 +84,32 @@ class RiemannSolver1D(object):
         phi_new = np.arange(self.nopart, dtype='float32')
         dphi = []
         
-        for i in range(self.nopart):
-            
-            temp = np.sum(self.kernel(pos_arr[i] - pos_arr, h, 1) * phi / rho[i])
-            
-            dphi.append( -(self.dt ) * temp)
-            
-        for i in range(self.nopart):
+        if 'field' not in kwargs.keys():
+        
+            for i in range(self.nopart):
+                
+                temp = np.sum(self.kernel(pos_arr[i] - pos_arr, h, 1) * phi / rho[i])
+                
+                dphi.append( -(self.dt ) * temp)
+                
+            for i in range(self.nopart):
 
-            phi_new[i] = phi[i] + dphi[i]
-            
+                phi_new[i] = phi[i] + dphi[i]
+
+        else:
+
+            self.EGN = self.particles.phi
+
+            for i in range(self.nopart):
+                
+                temp = np.sum(self.kernel(pos_arr[i] - pos_arr, h, 1) * phi / rho[i])
+                
+                dphi.append( -(self.dt ) * temp * self.EGN[i])
+                
+            for i in range(self.nopart):
+
+                phi_new[i] = phi[i] + dphi[i]
+                
         phi = phi_new
         
     def compute_phi(self):
