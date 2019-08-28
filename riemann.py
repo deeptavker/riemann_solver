@@ -115,26 +115,52 @@ class RiemannSolver1D(object):
         This method updates position
         This is for one timestep. 
         
-        Kwargs : is_periodic, period
+        Kwargs : is_periodic, period, field
         
         Remember, with position update, there also needs to be a reordering of particles. 
         Use argsort for the same. 
         '''
+        
         pos_arr = self.particles.x
         tags = self.particles.tag
-        for i in range(self.nopart):
-            if tags[i] == 1:
-                new_pos = pos_arr[i] + self.EGN * self.dt
-                if new_pos >= 1:
-                    pos_arr[i] = new_pos - 2
-                else:
-                    pos_arr[i] = new_pos
-                    
+        
+        
+            
+        if 'field' in kwargs.keys():
+            
+            #hardcoding velocity field for special case 
+            self.EGN = self.particles.phi
+            
+            for i in range(self.nopart):
+                if tags[i] == 1:
+                    new_pos = pos_arr[i] + self.EGN[i] * self.dt
+                    if new_pos >= 1:
+                        pos_arr[i] = new_pos - 2
+                    elif new_pos <= -1:
+                        pos_arr[i] = new_pos + 2
+                    else:
+                        pos_arr[i] = new_pos
+            
+        else:
+            
+            for i in range(self.nopart):
+                if tags[i] == 1:
+                    new_pos = pos_arr[i] + self.EGN * self.dt
+                    if new_pos >= 1:
+                        pos_arr[i] = new_pos - 2
+                    else:
+                        pos_arr[i] = new_pos
+
+        self.sort_particles()
+    
+    def sort_particles(self):
+        
         sortmask = np.argsort(self.particles.x)
         self.particles.x = self.particles.x[sortmask]
         self.particles.rho = self.particles.rho[sortmask]
         self.particles.phi = self.particles.phi[sortmask]
         self.particles.tag = self.particles.tag[sortmask]
+        
         
         
             
