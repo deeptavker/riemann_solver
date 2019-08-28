@@ -17,6 +17,12 @@ To add:
 
 ### Example
 
+Solving the following problem :
+- `du/dt + du/dx = 0`
+- `u(x, 0) = - sin(pi * x)`
+- Periodic in `[-1, 1]`
+- Find `u(x, 40)`
+
 ```Python
 
 new_sim = RiemannSolver1D(particles = particles, phi_initial = phi, kernel = vec_kernel, EGN = 1)
