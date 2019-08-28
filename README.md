@@ -43,3 +43,22 @@ extra particles on either side of boundary is to be done while create the instan
 - `configure_solver()` is required for any simulation as it sets `dt` (time step) and `tf` (t_final)
 - `update_rho()` uses the kernel approximation to update the density for each particle
 - `update_field_euler()` uses the sph approximation for updating the field array
+
+### Example
+
+Solving the following problem :
+- `du/dt + u * du/dx = 0`
+- `u(x, 0) = 1` for `|x| < 1/3` and `0` otherwise
+- Periodic in `[-1, 1]`
+- Find `u(x, 0.6)`
+
+```Python
+new_sim = RiemannSolver1D(particles = particles, phi_initial = phi, kernel = vec_kernel, EGN = 1)
+
+new_sim.configure_solver(0.01, 0.6)
+for i in range(int(new_sim.tf/new_sim.dt)):
+    new_sim.update_rho()
+    new_sim.update_field_euler(field=True)
+    new_sim.update_position_euler(is_periodic=True, period=[-1,1], field=True)
+plt.scatter(new_sim.particles.x[3:new_sim.nopart-3], new_sim.particles.phi[3:new_sim.nopart-3])
+```
