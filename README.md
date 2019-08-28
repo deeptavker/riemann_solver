@@ -1,6 +1,6 @@
 # Riemann_Solver
 
-A basic implementation of a 1 dimensional riemann solver using SPH technique. 
+A basic implementation of 1 dimensional riemann solver using SPH technique. 
 
 Read about Riemann problems [here](https://en.wikipedia.org/wiki/Riemann_problem). 
 
