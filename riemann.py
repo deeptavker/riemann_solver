@@ -124,32 +124,62 @@ class RiemannSolver1D(object):
         pos_arr = self.particles.x
         tags = self.particles.tag
         
-        
+        if 'is_periodic' in kwargs.keys():
+
+            period = kwargs['period']
+
+            dom_a = period[0]
+            dom_b = period[1]
+            diff = dom_b - dom_a
             
-        if 'field' in kwargs.keys():
-            
-            #hardcoding velocity field for special case 
-            self.EGN = self.particles.phi
-            
-            for i in range(self.nopart):
-                if tags[i] == 1:
-                    new_pos = pos_arr[i] + self.EGN[i] * self.dt
-                    if new_pos >= 1:
-                        pos_arr[i] = new_pos - 2
-                    elif new_pos <= -1:
-                        pos_arr[i] = new_pos + 2
-                    else:
-                        pos_arr[i] = new_pos
-            
+            if 'field' in kwargs.keys():
+                
+                #hardcoding velocity field for special case 
+                self.EGN = self.particles.phi
+                
+                for i in range(self.nopart):
+                    if tags[i] == 1:
+                        new_pos = pos_arr[i] + self.EGN[i] * self.dt
+                        if new_pos >= dom_b:
+                            pos_arr[i] = new_pos - diff
+                        elif new_pos <= dom_a:
+                            pos_arr[i] = new_pos + diff
+                        else:
+                            pos_arr[i] = new_pos
+                
+            else:
+                
+                for i in range(self.nopart):
+                    if tags[i] == 1:
+                        new_pos = pos_arr[i] + self.EGN * self.dt
+                        if new_pos >= dom_b:
+                            pos_arr[i] = new_pos - diff
+                        elif new_pos <= dom_a:
+                            pos_arr[i] = new_pos + diff
+                        else:
+                            pos_arr[i] = new_pos
+
         else:
-            
-            for i in range(self.nopart):
-                if tags[i] == 1:
-                    new_pos = pos_arr[i] + self.EGN * self.dt
-                    if new_pos >= 1:
-                        pos_arr[i] = new_pos - 2
-                    else:
+
+
+            if 'field' in kwargs.keys():
+                
+                #hardcoding velocity field for special case 
+                self.EGN = self.particles.phi
+                
+                for i in range(self.nopart):
+                    if tags[i] == 1:
+                        new_pos = pos_arr[i] + self.EGN[i] * self.dt
                         pos_arr[i] = new_pos
+                
+            else:
+                
+                for i in range(self.nopart):
+                    if tags[i] == 1:
+                        new_pos = pos_arr[i] + self.EGN * self.dt
+                        pos_arr[i] = new_pos
+
+
 
         self.sort_particles()
     
