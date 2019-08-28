@@ -36,3 +36,10 @@ for i in range(int(new_sim.tf/new_sim.dt)):
     
 plt.plot(new_sim.particles.x[3:new_sim.nopart-3], new_sim.particles.phi[3:new_sim.nopart-3])
 ```
+
+- `particles` are created using `ParticleArray` from `psyph.base.utils` , extra padding of
+extra particles on either side of boundary is to be done while create the instance of solver
+- `phi` here means the field, `F` in the equation. 
+- `configure_solver()` is required for any simulation as it sets `dt` (time step) and `tf` (t_final)
+- `update_rho()` uses the kernel approximation to update the density for each particle
+
