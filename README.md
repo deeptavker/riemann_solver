@@ -7,5 +7,6 @@ Read about Riemann problems [here](https://en.wikipedia.org/wiki/Riemann_problem
 To add:
 
 - XSPH Velocity correction for particles
-- Variable particle velocities support 
+- Variable particle velocities support : EGN as an evolving vector field 
 - More equations for simulating cases such as sod shocktube
+- Generalise periodicity from [-1,1] to any arbitary domain
