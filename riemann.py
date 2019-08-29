@@ -131,7 +131,7 @@ class RiemannSolver1D(object):
         This method updates position
         This is for one timestep. 
         
-        Kwargs : is_periodic, period, field
+        Kwargs : is_periodic, period, field, epsilon
         
         Remember, with position update, there also needs to be a reordering of particles. 
         Use argsort for the same. 
@@ -152,7 +152,8 @@ class RiemannSolver1D(object):
                 
                 #hardcoding velocity field for special case 
                 self.EGN = self.particles.phi
-                
+                self.xsph_correction(kwargs['epsilon'])
+
                 for i in range(self.nopart):
                     if tags[i] == 1:
                         new_pos = pos_arr[i] + self.EGN[i] * self.dt
@@ -210,5 +211,13 @@ class RiemannSolver1D(object):
         
         
             
-    def xsph_correction(self):
-        pass
+    def xsph_correction(self, epsilon):
+        pos_arr = self.particles.x
+        EGN_temp = [] 
+        for i in range(self.nopart):
+            temp = self.EGN[i] + epsilon * np.sum((self.EGN - self.EGN[i]) * self.kernel(pos_arr[i] - pos_arr, self.particles.h[0], 0) / self.particles.rho )
+            EGN_temp.append(temp)
+        self.EGN = EGN_temp
+
+
+
