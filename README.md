@@ -9,10 +9,6 @@ As of now, it can simulate evolution of a field `F` governed by the following eq
 - dF/dt + F\*dF/dx = 0    Given initial F , in this case EGN = phi (field) #hardcoded 
 
 
-To add:
-
-- XSPH Velocity correction for particles
-
 ### Example
 
 Solving the following problem :
