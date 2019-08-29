@@ -88,7 +88,7 @@ class RiemannSolver1D(object):
         
             for i in range(self.nopart):
                 
-                temp = np.sum(self.kernel(pos_arr[i] - pos_arr, h, 1) * phi / rho[i])
+                temp = np.sum(self.kernel(pos_arr[i] - pos_arr, h, 1) * (phi - phi[i])) / rho[i]
                 
                 dphi.append( -(self.dt ) * temp)
                 
