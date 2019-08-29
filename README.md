@@ -35,6 +35,10 @@ for i in range(int(new_sim.tf/new_sim.dt)):
 plt.plot(new_sim.particles.x[3:new_sim.nopart-3], new_sim.particles.phi[3:new_sim.nopart-3])
 ```
 
+### Sine wave captured while travelling. 
+![sine](https://github.com/deeptavker/Riemann_Solver/blob/master/sine_9.png)
+
+
 - `particles` are created using `ParticleArray` from `pysph.base.utils` , extra padding of
 extra particles on either side of boundary is to be done while create the instance of solver
 - `phi` here means the field, `F` in the equation. 
