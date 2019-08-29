@@ -122,7 +122,7 @@ class RiemannSolver1D(object):
         
         for i in range(self.nopart):
             
-            sph_phi.append(np.sum(self.kernel(pos_arr[i] - pos_arr, h, 0) * phi / rho[i]))
+            sph_phi.append(np.sum(self.kernel(pos_arr[i] - pos_arr, h, 0) * phi / rho))
             
         self.particles.phi = sph_phi
             
